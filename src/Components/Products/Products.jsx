@@ -1,28 +1,22 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { Box, Card, CardActions, CardContent, CardMedia, Grid, Paper, Typography, CardActionArea, IconButton, styled } from "@mui/material";
+import { Box, Card, CardActions, CardContent, CardMedia, Grid, Paper, Typography, CardActionArea, IconButton } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { getProducts } from "../../Services/Products";
 
 
-const CardActionsCSS = styled(CardActions)({
-    textAlign: 'left',
-});
 const Products = () => {
     const [products, productsSet] = useState([]);
-
     useEffect(() => {
         Products();
-        // return () => {
-        //     cleanup
-        // };
     }, []);
 
     const Products = async () =>{
         let response = await getProducts();
         productsSet(response.data);
     }
+
     return ( 
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -47,12 +41,11 @@ const Products = () => {
                                         </CardContent>
                                     </CardActionArea>
 
-                                    <CardActionsCSS>
+                                    <CardActions>
                                         <IconButton color="primary" sx={{ marginLeft: "auto" }}>
                                             <AddShoppingCartIcon />
                                         </IconButton>
-                                        {/* <Button variant="outlined" startIcon={<AddShoppingCartIcon />} ></Button> */}
-                                    </CardActionsCSS>
+                                    </CardActions>
                                 </Card>
                             </Paper>
                         </Grid>
