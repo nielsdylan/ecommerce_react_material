@@ -1,50 +1,65 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { Box, Card, CardActions, CardContent, CardMedia, Grid, Paper, Typography, CardActionArea, IconButton, styled } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { getProducts } from "../../Services/Products";
 
-// const CardActionsCSS = styled(CardActions)`
-//     text-align: left;
-//     color: 
-// `;
+
 const CardActionsCSS = styled(CardActions)({
     textAlign: 'left',
 });
 const Products = () => {
+    const [products, productsSet] = useState([]);
+
+    useEffect(() => {
+        Products();
+        // return () => {
+        //     cleanup
+        // };
+    }, []);
+
+    const Products = async () =>{
+        let response = await getProducts();
+        productsSet(response.data);
+    }
     return ( 
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={3} >
-                        <Card>
-                            <CardActionArea component={Link} to={"/producto"} sx={{ textDecoration: "none" }}>
-                                <CardMedia
-                                    // sx={{backgroundImage: "https://storage.contextoganadero.com/s3fs-public/cronica_de_la_semana/field_image/2022-03/cronica-origen-hamburguesas.jpg"}}
-                                    component="img"
-                                    alt="Hamburgesa"
-                                    height="170"
-                                    image="https://storage.contextoganadero.com/s3fs-public/cronica_de_la_semana/field_image/2022-03/cronica-origen-hamburguesas.jpg"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        Hamburgesa
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">S/6</Typography>
-                                </CardContent>
-                            </CardActionArea>
+                {
+                    products.map((product)=>(
+                        <Grid item xs={12} md={4} key={product.product_id}>
+                            <Paper elevation={3} >
+                                <Card>
+                                    <CardActionArea component={Link} to={"/producto"} sx={{ textDecoration: "none" }}>
+                                        <CardMedia
+                                            // sx={{backgroundImage: "https://storage.contextoganadero.com/s3fs-public/cronica_de_la_semana/field_image/2022-03/cronica-origen-hamburguesas.jpg"}}
+                                            component="img"
+                                            alt={product.name}
+                                            height="170"
+                                            image={product.image}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {product.name}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">S/{product.price}</Typography>
+                                        </CardContent>
+                                    </CardActionArea>
 
-                            <CardActionsCSS>
-                                <Box sx={{ flexGrow: 1, }}>
-                                </Box>
-                                <IconButton color="primary" >
-                                    <AddShoppingCartIcon />
-                                </IconButton>
-                                {/* <Button variant="outlined" startIcon={<AddShoppingCartIcon />} ></Button> */}
-                            </CardActionsCSS>
-                        </Card>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4}>
+                                    <CardActionsCSS>
+                                        <IconButton color="primary" sx={{ marginLeft: "auto" }}>
+                                            <AddShoppingCartIcon />
+                                        </IconButton>
+                                        {/* <Button variant="outlined" startIcon={<AddShoppingCartIcon />} ></Button> */}
+                                    </CardActionsCSS>
+                                </Card>
+                            </Paper>
+                        </Grid>
+                    ))
+                }
+
+                {/* <Grid item xs={12} md={4}>
                     <Paper elevation={3}>
                         <Card>
                             <CardActionArea component={Link} to={"/producto"} sx={{ textDecoration: "none" }}>
@@ -61,12 +76,9 @@ const Products = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                <Box sx={{ flexGrow: 1, }}>
-                                </Box>
-                                <IconButton color="primary" >
+                                <IconButton color="primary" sx={{ marginLeft: "auto" }}>
                                     <AddShoppingCartIcon />
                                 </IconButton>
-                                {/* <Button size="small">AGREGAR</Button> */}
                             </CardActions>
                         </Card>
                     </Paper>
@@ -89,10 +101,7 @@ const Products = () => {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions>
-                                {/* <Button size="small">AGREGAR</Button> */}
-                                <Box sx={{ flexGrow: 1, }}>
-                                </Box>
-                                <IconButton color="primary" >
+                                <IconButton color="primary" sx={{ marginLeft: "auto" }}>
                                     <AddShoppingCartIcon />
                                 </IconButton>
                             </CardActions>
@@ -119,16 +128,13 @@ const Products = () => {
                             </CardActionArea>
 
                             <CardActions>
-                                {/* <Button size="small">AGREGAR</Button> */}
-                                <Box sx={{ flexGrow: 1, }}>
-                                </Box>
-                                <IconButton color="primary" >
+                                <IconButton color="primary" sx={{ marginLeft: "auto" }}>
                                     <AddShoppingCartIcon />
                                 </IconButton>
                             </CardActions>
                         </Card>
                     </Paper>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Box>
      );
