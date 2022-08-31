@@ -2,7 +2,7 @@ import { Box, Container, Grid } from "@mui/material";
 import Categorys from "../Components/Products/Categorys";
 import Products from "../Components/Products/Products";
 
-const ListProducts = () => {
+const ListProducts = ({dispatch}) => {
     return ( 
         <Container>
             <Box sx={{ flexGrow: 1, pt: 5 }}>
@@ -11,7 +11,7 @@ const ListProducts = () => {
                         <Categorys></Categorys>
                     </Grid>
                     <Grid item xs={12} md={8}>
-                        <Products></Products>
+                        <Products dispatch={dispatch}></Products>
                     </Grid>
                 </Grid>
             </Box>

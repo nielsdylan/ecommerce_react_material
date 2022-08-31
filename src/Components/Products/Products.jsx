@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import { Box, Card, CardActions, CardContent, CardMedia, Grid, Paper, Typography, CardActionArea, IconButton } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { getProducts } from "../../Services/Products";
+import { shoppingInitialState, ShoppingReducers } from "../../Reducers/ShoppingReducers";
+import { TYPES } from "../../Actions/ShoppingAction";
 
 
-const Products = () => {
+const Products = ({dispatch}) => {
     const [products, productsSet] = useState([]);
     useEffect(() => {
         Products();
@@ -17,6 +19,10 @@ const Products = () => {
         productsSet(response.data);
     }
 
+    // const [state, dispatch] = useReducer(ShoppingReducers, shoppingInitialState)
+    const addToCart = (id) =>{
+        dispatch({type:TYPES.ADD_TO_CART, payload:id, data:products});
+    };
     return ( 
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -42,7 +48,7 @@ const Products = () => {
                                     </CardActionArea>
 
                                     <CardActions>
-                                        <IconButton color="primary" sx={{ marginLeft: "auto" }}>
+                                        <IconButton color="primary" sx={{ marginLeft: "auto" }} onClick={()=>addToCart(product.product_id)}>
                                             <AddShoppingCartIcon />
                                         </IconButton>
                                     </CardActions>
