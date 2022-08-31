@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Box, Card, CardActions, CardContent, CardMedia, Grid, Paper, Typography, CardActionArea, IconButton } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { getProducts } from "../../Services/Products";
-import { shoppingInitialState, ShoppingReducers } from "../../Reducers/ShoppingReducers";
 import { TYPES } from "../../Actions/ShoppingAction";
 
 
